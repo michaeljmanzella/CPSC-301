@@ -1,0 +1,246 @@
+#include <iostream>
+#include <fstream>
+#include "Header.h"
+
+using namespace std;
+
+int main()
+{
+	int choice = 0;
+	int Table[100];
+	int Table2[100];
+	int count = 0;
+	int count2 = 0;
+	ofstream outFile;
+	ifstream inFile;
+
+	Numbers readIn[5];
+
+	Numbers one;
+	one.interger = 1;
+	one.dbl = 2;
+
+	Numbers two;
+	two.interger = 3;
+	two.dbl = 4;
+
+	Numbers three;
+	three.interger = 5;
+	three.dbl = 6;
+
+	Numbers four;
+	four.interger = 7;
+	four.dbl = 8;
+
+	Numbers five;
+	five.interger = 9;
+	five.dbl = 10;
+
+	Numbers place[5] = { one, two, three, four, five };
+
+	while (choice != 420)
+	{
+		cout << "-----------------------------\n";
+		cout << "1 Open text file\n";
+		cout << "2 Enter Numbers to Store\n";
+		cout << "3 Store Numbers to File\n";
+		cout << "4 Close Output File\n";
+		cout << "5 Open Input Text File\n";
+		cout << "6 Input Text File\n";
+		cout << "7 Output Text File\n";
+		cout << "8 Close input Text File\n";
+		cout << "9 Open Binary Output File\n";
+		cout << "10 Write to Binary File\n";
+		cout << "11 Open Binary inFile\n";
+		cout << "12 Read Binary Input File\n";
+		cout << "13 Output Binary Input File\n";
+		cout << "14 Write class to Binary\n";
+		cout << "15 Read Class binary File\n";
+		cout << "16 Output Class from Binary File\n";
+		cout << "17 Write 5 obects to binary file\n";
+		cout << "18 Retrieve 3rd Object and Output\n";
+		cout << "Make a Selection: ";
+		cin >> choice;
+
+		switch (choice)
+		{
+		case 1:
+		{
+			cout << "-----------------------------\n";
+
+			//open text file
+			outFile.open("test.txt");
+			break;
+		}
+		case 2:
+		{
+			cout << "-----------------------------\n";
+
+			//get numbers
+			count = 0;
+			int temp = 0;
+			cout << "Enter Numbers (-1 to STOP):\n";
+			do
+			{
+				cin >> temp;
+				if (temp != -1)
+				{
+					Table[count] = temp;
+					count++;
+				}
+			} while (temp != -1);
+
+			break;
+		}
+		case 3:
+		{
+			cout << "-----------------------------\n";
+
+			//store numbers to text file
+			for (int i = 0; i < count; i++)
+			{
+				outFile << Table[i] << endl;
+			}
+			break;
+		}
+		case 4:
+		{
+			cout << "-----------------------------\n";
+
+			//close the text file
+			outFile.close();
+			break;
+		}
+		case 5:
+		{
+			cout << "-----------------------------\n";
+
+			//input text file
+			inFile.open("test.txt");
+			break;
+		}
+		case 6:
+		{
+			cout << "-----------------------------\n";
+			count2 = 0;
+			//input text file
+			while(inFile)
+			{
+				inFile >> Table2[count2];
+				count2++;
+			}
+			break;
+		}
+		case 7:
+		{
+			cout << count2 << "-----------------------------\n";
+
+			//output file
+			for (int i = 0; i < count2 -1; i++)
+			{
+				cout << Table2[i] << endl;
+			}
+			break;
+		}
+		case 8:
+		{
+			cout << "-----------------------------\n";
+
+			inFile.close();
+			break;
+		}
+		case 9:
+		{
+			//open binary file
+			outFile.open("test.bin", ios::out| ios::binary | ios::app);
+			break;
+
+		}
+		case 10:
+		{
+			// Write to Binary File
+			outFile.write(reinterpret_cast<char *>(Table), sizeof(Table));
+			break;
+		}
+		case 11:
+		{
+			//open binary input
+			inFile.open("test.bin",ios::in|ios::binary);
+			break;
+			
+		}
+		case 12:
+		{
+			//read binary file
+			inFile.read(reinterpret_cast<char *>(Table2), sizeof(Table2));
+			break;
+		}
+		case 13:
+		{
+			//display binary file
+			int k = 0;
+			while (k < 10)
+			{
+				cout << Table2[k] << endl;
+				k++;
+			}
+			break;
+		}
+		case 14:
+		{
+			//write class to binary file
+			outFile.write(reinterpret_cast<char *>(&one), sizeof(one));
+			break;
+		}
+		case 15:
+		{
+			//read one objects
+			inFile.read(reinterpret_cast<char *>(&two), sizeof(two));
+			break;
+		}
+		case 16:
+		{
+			//output 5 objects
+			for (int i = 0; i < 5; i++)
+			{
+				cout << readIn[i].interger << " " << readIn[i].dbl << endl;
+				
+			}
+			cout << sizeof(place);
+			break;
+		}
+		case 17:
+		{
+			//write 5 objects to binary
+			outFile.write(reinterpret_cast<char *>(place), sizeof(place));
+			break;
+		}
+		case 18:
+		{
+			inFile.seekg(16L, ios::beg);
+			inFile.read(reinterpret_cast<char *>(&readIn[0]), sizeof(readIn[0]));
+			cout << readIn[0].interger << " " << readIn[0].dbl;
+		}
+		case 20:
+		{
+			//read 5 objects
+			inFile.read(reinterpret_cast<char *>(&readIn), sizeof(readIn));
+			break;
+		}
+		case 21:
+		{
+			//output 5 objects
+
+		}
+
+
+
+
+		}
+	}
+
+	
+
+
+	return 0;
+}
