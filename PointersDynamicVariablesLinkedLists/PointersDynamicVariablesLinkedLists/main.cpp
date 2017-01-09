@@ -7,6 +7,8 @@ void printAll(NodeType *& head);
 bool find(NodeType *& head);
 bool deleteNode(NodeType *& head);
 bool deleteList(NodeType *& head);
+//recursive
+
 
 
 int main()
