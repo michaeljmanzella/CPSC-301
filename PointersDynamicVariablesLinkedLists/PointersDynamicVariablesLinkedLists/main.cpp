@@ -8,7 +8,7 @@ bool find(NodeType *& head);
 bool deleteNode(NodeType *& head);
 bool deleteList(NodeType *& head);
 //recursive
-
+void insertAtend(NodeType *& head,NodeType *& current, NodeType *& previous,int num );
 
 
 int main()
@@ -24,6 +24,7 @@ int main()
 		cout << "c. Find\n";
 		cout << "d. Delete Node\n";
 		cout << "e. Delete All\n";
+		cout << "f. Insert at End\n";
 		cout << "q. Quit\n";
 		cout << "Enter Selection:";
 		cin >> choice;
@@ -67,6 +68,15 @@ int main()
 			{
 				cout << "LIST DELETED\n";
 			}
+			break;
+		}
+		case 'f':
+		{
+			NodeType * current = head;
+			NodeType * previous = head;
+			int num = getValue();
+			insertAtend(head, current, previous,num);
+
 			break;
 		}
 		case 'q':
@@ -182,5 +192,11 @@ while (head != NULL)
 }
 	head = NULL;
 	return true;
+}
+void insertAtend(NodeType *& head, NodeType *& current, NodeType *& previous,int num)
+{
+	//find last node
+
+
 }
 
