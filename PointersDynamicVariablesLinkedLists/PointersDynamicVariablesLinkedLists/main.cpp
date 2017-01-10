@@ -8,7 +8,11 @@ bool find(NodeType *& head);
 bool deleteNode(NodeType *& head);
 bool deleteList(NodeType *& head);
 //recursive
-void insertAtend(NodeType *& head,NodeType *& current, NodeType *& previous,int num );
+void insertAtend(NodeType *& current,int num );
+void deleteAtEnd(NodeType *& current, NodeType *& previous,NodeType *& head);
+void recursivePrintBackwards(NodeType *& current);
+//void recursiveDelete();
+bool hitEnd = false;
 
 
 int main()
@@ -25,6 +29,8 @@ int main()
 		cout << "d. Delete Node\n";
 		cout << "e. Delete All\n";
 		cout << "f. Insert at End\n";
+		cout << "g. Delete at End\n";
+		cout << "h. Print Recursivly Backwards\n";
 		cout << "q. Quit\n";
 		cout << "Enter Selection:";
 		cin >> choice;
@@ -73,9 +79,25 @@ int main()
 		case 'f':
 		{
 			NodeType * current = head;
-			NodeType * previous = head;
 			int num = getValue();
-			insertAtend(head, current, previous,num);
+			insertAtend(current,num);
+
+			break;
+		}
+		case 'g':
+		{
+			NodeType * current = head;
+			NodeType * previous = head;
+			deleteAtEnd(current, previous,head);
+			break;
+		}
+		case'h':
+		{
+			NodeType * current = new NodeType;
+			int temp;
+			bool hitEnd = false;
+			current = head;
+			recursivePrintBackwards(current);
 
 			break;
 		}
@@ -113,11 +135,19 @@ void printAll(NodeType *& head)
 {
 	NodeType * temp = new NodeType;
 	temp = head;
-	while (temp != NULL)
+	if (head != NULL)
 	{
-		cout << temp->info << endl;
-		temp = temp->nextPtr;
+		while (temp != NULL)
+		{
+			cout << temp->info << endl;
+			temp = temp->nextPtr;
+		}
 	}
+	else
+	{
+		cout << "LIST EMPTY\n";
+	}
+	
 }
 bool find(NodeType *& head)
 {
@@ -193,10 +223,56 @@ while (head != NULL)
 	head = NULL;
 	return true;
 }
-void insertAtend(NodeType *& head, NodeType *& current, NodeType *& previous,int num)
+void insertAtend(NodeType *& current,int num)
 {
-	//find last node
-
-
+	if (current->nextPtr == NULL)
+	{
+		NodeType * node = new NodeType;
+		current->nextPtr = node;
+		node->info = num;
+		node->nextPtr = NULL;
+	}
+	else
+	{
+		current = current->nextPtr;
+		insertAtend(current, num);
+	}
 }
-
+void deleteAtEnd(NodeType *& current, NodeType *& previous, NodeType *& head)
+{
+	//if empty
+	if (current == NULL)
+	{
+		cout << "LIST EMPTY\n";
+	}
+	else if (current->nextPtr == NULL)
+	{
+		//only one item 
+		if (head->nextPtr == NULL)
+		{
+			head = NULL;
+			delete current;
+		}
+		else
+		{
+			previous->nextPtr = NULL;
+			delete current;
+		}
+	}
+	else
+	{
+		previous = current;
+		current = current->nextPtr;
+		deleteAtEnd(current, previous,head);
+	}
+}
+void recursivePrintBackwards(NodeType *& current)
+{
+	int temp = current->info;
+	if (current->nextPtr != NULL)
+	{
+		current = current->nextPtr;
+		recursivePrintBackwards(current);
+	}
+	cout << temp << endl;
+}
