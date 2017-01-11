@@ -8,12 +8,10 @@ bool find(NodeType *& head);
 bool deleteNode(NodeType *& head);
 bool deleteList(NodeType *& head);
 //recursive
-void insertAtend(NodeType *& current,int num );
-void deleteAtEnd(NodeType *& current, NodeType *& previous,NodeType *& head);
 void recursivePrintBackwards(NodeType *& current);
-//void recursiveDelete();
-bool hitEnd = false;
-
+bool recursiveFindAndDelete(int value, NodeType *& head,NodeType *& current,NodeType *& previous);
+void insertAtend(NodeType *& current, int num);
+void deleteAtEnd(NodeType *& current, NodeType *& previous, NodeType *& head);
 
 int main()
 {
@@ -31,6 +29,7 @@ int main()
 		cout << "f. Insert at End\n";
 		cout << "g. Delete at End\n";
 		cout << "h. Print Recursivly Backwards\n";
+		cout << "i. Recursive Find and Delete\n";
 		cout << "q. Quit\n";
 		cout << "Enter Selection:";
 		cin >> choice;
@@ -94,11 +93,34 @@ int main()
 		case'h':
 		{
 			NodeType * current = new NodeType;
-			int temp;
-			bool hitEnd = false;
 			current = head;
 			recursivePrintBackwards(current);
 
+			break;
+		}
+		case 'i':
+		{
+			//list is empty
+			if (head == NULL)
+			{
+				cout << "LIST EMPTY\n";
+				break;
+			}
+
+			//get number to find
+			int nodeToRemove = getValue();
+			NodeType * current = new NodeType;
+			NodeType * previous = new NodeType;
+			current = head;
+			previous = head;
+			if (recursiveFindAndDelete(nodeToRemove, head, current, previous))
+			{
+				cout << "node removed!\n";
+			}
+			else
+			{
+				cout << "not removed\n";
+			}
 			break;
 		}
 		case 'q':
@@ -275,4 +297,44 @@ void recursivePrintBackwards(NodeType *& current)
 		recursivePrintBackwards(current);
 	}
 	cout << temp << endl;
+}
+bool recursiveFindAndDelete(int value, NodeType *& head, NodeType *& current, NodeType *& previous)
+{
+	if ((current->nextPtr != NULL) && (current->info != value))
+	{
+		previous = current;
+		current = current->nextPtr;
+		recursiveFindAndDelete(value, head, current, previous);
+	}
+	else
+	{
+		//not in the list
+		if (current->info != value)
+		{
+			return false;
+		}
+		//the info is in the first node
+		else if (current == head)
+		{
+			cout << "delete first\n\n";
+			head = head->nextPtr;
+			delete current;
+			return true;
+		}
+		//if node is last
+		else if ((current->info == value) && (current->nextPtr == NULL) && (previous->nextPtr == current))
+		{
+			cout << "delete last\n\n";
+			previous->nextPtr = NULL;
+			delete current;
+			return true;
+		}
+		else
+		{
+			cout << "delete somewhere\n";
+			previous->nextPtr = current->nextPtr;
+			delete current;
+			return true;
+		}
+	}
 }
