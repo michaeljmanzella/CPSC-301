@@ -14,8 +14,6 @@ int getValue();
 int main()
 {
 	Node list;
-	int value = 0;
-	
 	char choice = 'm';
 
 	while (choice != 'z')
