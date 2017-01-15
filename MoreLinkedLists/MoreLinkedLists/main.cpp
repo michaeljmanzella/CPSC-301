@@ -9,11 +9,13 @@ int sumList(Node *& head);
 Node * copyList(Node * head);
 void reverse(Node *& head);
 int getValue();
+bool splitList(Node & list1, Node & list2);
 
 
 int main()
 {
-	Node list;
+	Node list1(0);
+	Node list2(0);
 	char choice = 'm';
 
 	while (choice != 'z')
@@ -22,6 +24,8 @@ int main()
 		cout << "w Insert at rear\n";
 		cout << "e Delete first\n";
 		cout << "r Print\n";
+		cout << "t Split List\n";
+		cout << "y Print Split\n";
 		cout << "Please Choose: ";
 		cin >> choice;
 
@@ -30,23 +34,40 @@ int main()
 		case 'q':
 		{
 			int value = getValue();
-			list.insertAtFront(value);
+			list1.insertAtFront(value);
 			break;
 		}
 		case 'w':
 		{
 			int value = getValue();
-			list.insertAtRear(value);
+			list1.insertAtRear(value);
 			break;
 		}
 		case 'e':
 		{
-			list.deleteFirst();
+			list1.deleteFirst();
 			break;
 		}
 		case 'r':
 		{
-			list.print();
+			list1.print(list1);
+			break;
+		}
+		case 't':
+		{
+			if (splitList(list1,list2))
+			{
+				cout << "NODE SPLIT\n";
+			}
+			else
+			{
+				cout << "ERROR\n";
+			}
+			break;
+		}
+		case 'y':
+		{
+			list2.print(list2);
 			break;
 		}
 		}
@@ -144,4 +165,42 @@ int getValue()
 void insertAtFront(int value)
 {
 
+}
+bool splitList(Node & list1, Node & list2)
+{
+	Node * middle;
+	Node * current;
+
+	if (list1.first == NULL)//list empty
+	{
+		cout << "empty\n";
+		list2.first = NULL;
+		return false;
+	}
+    else if (list1.next == NULL)//list has one node
+	{
+		cout << "one node\n";
+		list2.first = NULL;
+		return false;
+	}
+	else
+	{
+		middle = list1.first;//assign the head to the new middle pointer
+		current = list1.first;//current to next item in the list
+
+		if (current != NULL)//list has multiple nodes
+		{
+			current = current->next;//move the current down the list 
+		}
+		while (current != NULL)//move middle onece and current twice
+		{
+			middle = middle->next;//move foward middle once
+			current = current->next;//move current 
+			if (current != NULL)
+				current = current->next;//move current again
+		}
+		list2.first = middle->next;//place the new head to the middle
+		middle->next = NULL;//make the first list end and point to NULL
+		return true;
+	}
 }
