@@ -14,5 +14,5 @@ public:
 	void insertAtRear(int value);
 	void deleteFirst();
 	void print();
-
+	bool splitList(Node * head1, Node *& head2);
 };
