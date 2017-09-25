@@ -1,3 +1,6 @@
+//Michael Manzella
+//Text VS Binary
+//25 Sep 17
 #include <iostream>
 #include <fstream>
 #include "Header.h"
