@@ -2,6 +2,6 @@
 class Numbers
 {
 public:
-	int interger = 0;
+	int integer = 0;
 	double dbl = 0;
 };
