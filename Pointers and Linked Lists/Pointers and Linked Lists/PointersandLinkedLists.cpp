@@ -1,6 +1,4 @@
-// PointersandLinkedLists.cpp : Defines the entry point for the console application.
-//
-
+//Michael Manzella 03-OCT-17
 #include "stdafx.h"
 
 
