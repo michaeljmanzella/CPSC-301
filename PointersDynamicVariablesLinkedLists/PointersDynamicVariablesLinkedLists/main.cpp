@@ -2,10 +2,11 @@
 using namespace std;
 
 int getValue();
-void addPtr(NodeType *& head);
-void printAll(NodeType *& head);
+void insert(NodeType *& head);
+void printList(NodeType *& head);
+void deleteFirst(NodeType *& head);
 bool find(NodeType *& head);
-bool deleteNode(NodeType *& head);
+bool findAndDelete(NodeType *& head);
 bool deleteList(NodeType *& head);
 //recursive
 void recursivePrintBackwards(NodeType *& current);
@@ -17,14 +18,15 @@ int main()
 {
 	NodeType * head = NULL;
 	int value = 0;
-	char choice = 'x';
+	char choice = 'm';
 
 	while (choice != 'z')
 	{
-		cout << "a. Enter Value:\n";
+		cout << "a. Add:\n";
 		cout << "b. Print All:\n";
 		cout << "c. Find\n";
-		cout << "d. Delete Node\n";
+		cout << "x. Delete First\n";
+		cout << "d. Delete\n";
 		cout << "e. Delete All\n";
 		cout << "f. Insert at End\n";
 		cout << "g. Delete at End\n";
@@ -37,12 +39,12 @@ int main()
 		{
 		case 'a':
 		{
-			addPtr(head);
+			insert(head);
 			break;
 		}
 		case 'b':
 		{
-			printAll(head);
+			printList(head);
 			break;
 		}
 		case 'c':
@@ -55,9 +57,14 @@ int main()
 				cout << "NOT FOUND!\n";
 			break;
 		}
+		case 'x':
+		{
+			deleteFirst(head);
+			break;
+		}
 		case 'd':
 		{
-			if (deleteNode(head))
+			if (findAndDelete(head))
 			{
 				cout << "NODE REMOVED\n";
 			}
@@ -146,14 +153,14 @@ int getValue()
 	cin >> value;
 	return value;
 }
-void addPtr(NodeType *& head)
+void insert(NodeType *& head)
 {
 	NodeType * temp = new NodeType;
 	temp->info = getValue();
 	temp->nextPtr = head;
 	head = temp;
 }
-void printAll(NodeType *& head)
+void printList(NodeType *& head)
 {
 	NodeType * temp = new NodeType;
 	temp = head;
@@ -171,6 +178,16 @@ void printAll(NodeType *& head)
 	}
 	
 }
+void deleteFirst(NodeType *& head)
+{	//create temp to point at head
+	NodeType * temp = new NodeType;
+	//point temp to head
+	temp = head;
+	//point head to next in list
+	head = head->nextPtr;
+	//delete temp
+	delete temp;
+}
 bool find(NodeType *& head)
 {
 	int value = getValue();
@@ -183,7 +200,7 @@ bool find(NodeType *& head)
 	else
 		return false;
 }
-bool deleteNode(NodeType *& head)
+bool findAndDelete(NodeType *& head)
 {
 	NodeType * currentPtr = head;
 	NodeType * previousPtr = NULL;
