@@ -11,11 +11,6 @@ void deleteFirst(NodeType *& head);
 bool find(NodeType *& head);
 bool findAndDelete(NodeType *& head);
 bool deleteList(NodeType *& head);
-//recursive
-void recursivePrintBackwards(NodeType *& current);
-bool recursiveFindAndDelete(int value, NodeType *& head, NodeType *& current, NodeType *& previous);
-void insertAtend(NodeType *& current, int num);
-void deleteAtEnd(NodeType *& current, NodeType *& previous, NodeType *& head);
 
 int main()
 {
@@ -25,16 +20,13 @@ int main()
 
 	while (choice != 'z')
 	{
+		cout << "*****************************\n";
 		cout << "a. Add:\n";
 		cout << "b. Print All:\n";
 		cout << "c. Find\n";
-		cout << "x. Delete First\n";
-		cout << "d. Delete\n";
-		cout << "e. Delete All\n";
-		cout << "f. Insert at End\n";
-		cout << "g. Delete at End\n";
-		cout << "h. Print Recursivly Backwards\n";
-		cout << "i. Recursive Find and Delete\n";
+		cout << "d. Delete First\n";
+		cout << "e. Delete\n";
+		cout << "f. Delete All\n";
 		cout << "q. Quit\n";
 		cout << "Enter Selection:";
 		cin >> choice;
@@ -47,6 +39,7 @@ int main()
 		}
 		case 'b':
 		{
+			cout << "Printing List\n";
 			printList(head);
 			break;
 		}
@@ -60,12 +53,13 @@ int main()
 				cout << "NOT FOUND!\n";
 			break;
 		}
-		case 'x':
+		case 'd':
 		{
+			cout << "Deleting First\n";
 			deleteFirst(head);
 			break;
 		}
-		case 'd':
+		case 'e':
 		{
 			if (findAndDelete(head))
 			{
@@ -77,71 +71,15 @@ int main()
 			}
 			break;
 		}
-		case 'e':
-		{
-			if (deleteList(head))
-			{
-				cout << "LIST DELETED\n";
-			}
-			break;
-		}
 		case 'f':
 		{
-			NodeType * current = head;
-			int num = getValue();
-			insertAtend(current, num);
-
-			break;
-		}
-		case 'g':
-		{
-			NodeType * current = head;
-			NodeType * previous = head;
-			deleteAtEnd(current, previous, head);
-			break;
-		}
-		case'h':
-		{
-			NodeType * current = new NodeType;
-			current = head;
-			recursivePrintBackwards(current);
-
-			break;
-		}
-		case 'i':
-		{
-			//list is empty
-			if (head == NULL)
-			{
-				cout << "LIST EMPTY\n";
-				break;
-			}
-
-			//get number to find
-			int nodeToRemove = getValue();
-			NodeType * current = new NodeType;
-			NodeType * previous = new NodeType;
-			current = head;
-			previous = head;
-			if (recursiveFindAndDelete(nodeToRemove, head, current, previous))
-			{
-				cout << "node removed!\n";
-			}
-			else
-			{
-				cout << "not removed\n";
-			}
-			break;
-		}
-		case 'q':
-		{
 			if (deleteList(head))
 			{
 				cout << "LIST DELETED\n";
 			}
-			choice = 'z';
 			break;
 		}
+		
 		}
 	}
 
